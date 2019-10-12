@@ -1,4 +1,5 @@
 ﻿#define __DEBUG__
+// https://www.tenforums.com/general-support/62662-how-clear-applications-get-notifications-these-senders.html
 
 using System;
 using System.Collections.Generic;

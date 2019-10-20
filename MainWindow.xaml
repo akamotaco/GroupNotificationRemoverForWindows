@@ -1,12 +1,34 @@
-﻿<Window x:Class="GroupNotificationRemoverForWindows.MainWindow"
+<Window x:Class="GroupNotificationRemoverForWindows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GroupNotificationRemoverForWindows"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Width="400"
+        Height="450"
+        Title="GroupNotificationRemoverForWindows"
+        mc:Ignorable="d">
+  <Grid>
+    <Button x:Name="removeButton"
+            Content="Remove"
+            Width="75"
+            Height="23"
+            Margin="0,24,32,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Grid.Column="0"
+            Grid.Row="0" />
+    <ListView x:Name="GroupListView"
+              Margin="27,66,32,35"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Grid.Column="0"
+              Grid.Row="0" />
+    <TextBlock Margin="27,27.5,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Text="Group Notification List"
+               Grid.Column="0"
+               Grid.Row="0" />
+  </Grid>
 </Window>

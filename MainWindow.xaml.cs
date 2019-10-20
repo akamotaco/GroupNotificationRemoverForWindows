@@ -1,5 +1,4 @@
-﻿// #define __DEBUG__
-// https://www.tenforums.com/general-support/62662-how-clear-applications-get-notifications-these-senders.html
+﻿// https://www.tenforums.com/general-support/62662-how-clear-applications-get-notifications-these-senders.html
 
 using System;
 using System.Collections.Generic;
@@ -19,11 +18,6 @@ namespace GroupNotificationRemoverForWindows
 
         public MainWindow()
         {
-#if __DEBUG__
-            ConsoleAllocator.ShowConsoleWindow();
-            Console.WriteLine("Console mode on.");
-            test();
-#endif
             InitializeComponent();
 
             Initialize();
@@ -113,72 +107,6 @@ namespace GroupNotificationRemoverForWindows
         private void Initialize()
         {
             this.GroupListView.ItemsSource = groupList;
-        }
-
-        private void test()
-        {
-            // get database path
-            var DatabaseURL = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DatabasePath);
-            Console.WriteLine(DatabaseURL);
-
-            // connect
-            var conn = new SQLiteConnection("Data Source="+DatabaseURL);
-            try
-            {
-                conn.Open();
-
-                // query
-                var command = new SQLiteCommand("select * from HandlerAssets", conn);
-                var result = command.ExecuteReader();
-                var schema = result.GetValues();
-                foreach(var v in schema)
-                {
-                    Console.Write(v+"\t");
-                }
-                Console.Write("\n");
-
-#region get info of groupnotifications
-                var groupNotifications = new List<(int HandlerId, string AssetKey, string AssetValue)>();
-                
-                while(result.Read()) {
-                    foreach(string v in schema)
-                    {
-                        Console.Write(result[v]+"\t");
-                        if(v == "AssetKey" && result[v].ToString() == "DisplayName")
-                        {
-                            groupNotifications.Add((int.Parse(result["HandlerId"].ToString()), result["AssetKey"].ToString(), result["AssetValue"].ToString()));
-                        }
-
-                    }
-                    Console.WriteLine("");
-                }
-                result.Close();
-#endregion
-
-#region list group notification
-                Console.WriteLine("[Group Notification]");
-                foreach(var noti in groupNotifications)
-                    Console.WriteLine($"{noti.HandlerId}\t{noti.AssetKey}\t{noti.AssetValue}");
-#endregion
-
-#region remove group notification
-                Console.WriteLine("[Remove Group Notification]");
-                foreach(var noti in groupNotifications)
-                {
-                    // 7. Enter and execute entry: "delete from HandlerSettings where HandlerID = X".
-                    // 8. Enter and execute entry: "delete from Notification where HandlerID = X".
-                    // 9. Enter and execute entry: "delete from WNSPushChannel where HandlerID = X".
-                    // 10. Enter and execute entry: "delete from NotificationHandler where HandlerID = X".
-                }
-#endregion
-
-                // disconnect
-                conn.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
         }
     }
 }
